@@ -7,7 +7,7 @@ var app = express();
 var PRODUCTS_FILE = path.join(__dirname, 'src/assets/js/components/product-data.json');
 
 app.set('port', (process.env.PORT || 3000));
-
+//hola
 app.use('/', express.static(__dirname));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
