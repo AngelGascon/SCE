@@ -1,0 +1,3 @@
+[submodule "vuejs-crud"]
+	path = vuejs-crud
+	url = https://github.com/AngelGascon/vuejs-crud.git
