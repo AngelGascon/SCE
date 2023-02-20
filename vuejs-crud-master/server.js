@@ -22,7 +22,7 @@ app.use(function(req, res, next) {
 
     // Disable caching so we'll always get the latest comments.
     res.setHeader('Cache-Control', 'no-cache');
-    next();
+    next();//edwsaf
 });
 
 app.get('/api/products', function(req, res) {
