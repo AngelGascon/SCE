@@ -11,8 +11,8 @@
         <table class="table table-hover">
             <thead>
             <tr>
-                <td>ID</td>
                 <td>Name</td>
+                <td>Description</td>
                 <td>Price</td>
                 <td>Actions</td>
             </tr>
@@ -20,8 +20,8 @@
 
             <tbody>
                 <tr v-for="product in products">
-                    <td>{{ product.id }}</td>
                     <td>{{ product.name }}</td>
+                    <td>{{ product.description }}</td>
                     <td>{{ product.price }}</td>
                     <td>
                         <router-link :to="{name: 'edit_product', params: { id: product.id }}" class="btn btn-primary">Edit</router-link>
@@ -40,7 +40,8 @@
             return{
                 products: [],
                 originalProducts: [],
-                productSearch: ''
+                productSearch: '' ,
+                sort: 0  // 0 asc, 1 des
             }
         },
 
@@ -55,9 +56,14 @@
                 this.$http.get('http://localhost:3000/api/products').then((response) => {
                     this.products = response.body;
                     this.originalProducts = this.products;
+                    this.sortCoins();
                 }, (response) => {
 
                 });
+            },
+            sortCoins: function()
+            {   //falta fer el if de sort 
+                this.products.sort((a, b) => a.price - b.price);
             },
 
             searchProducts: function()

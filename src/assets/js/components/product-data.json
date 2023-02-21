@@ -1,27 +1,27 @@
 [
     {
-        "id": 1,
-        "name": "Fire TV Stick",
+        "name": "Bitcoin",
+        "description": "La mes popu",
         "price": "32.99"
     },
     {
-        "id": 2,
-        "name": "Amazon Echo Dot",
+        "name": "Etherium",
+        "description": "etherium coin",
         "price": "49.99"
     },
     {
-        "id": 3,
-        "name": "Amazon Echo, Black",
+        "name": "Doguecoin",
+        "description": "cacacoin",
         "price": "149.99"
     },
     {
-        "id": 4,
-        "name": "Fire Tablet, 7",
-        "price": "47.49"
+        "name": "Danicion",
+        "description": "La millor no hi ha dubte",
+        "price": "10000000.69"
     },
     {
-        "id": 5,
-        "name": "Kindle Paperwhitefff",
+        "name": "Boofcoin",
+        "description": "Jo trec un 7 a ESO",
         "price": "104.99"
     }
 ]
