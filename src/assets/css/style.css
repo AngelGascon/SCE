@@ -9,3 +9,7 @@ body
     background: #FFF;
     padding: 3rem;
 }
+td {
+    text-align: center;
+    font-size: 18px;
+}

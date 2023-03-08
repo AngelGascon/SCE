@@ -3,7 +3,9 @@
         <h1>All Products</h1>
 
         <p><router-link :to="{ name: 'create_product' }" class="btn btn-primary">Create Product</router-link></p>
-
+        <p class="btn btn-primary" @click="toggleSortOrder">
+            {{ sort === 'asc' ? 'Sort Descending' : 'Sort Ascending' }}
+        </p>
         <div class="form-group">
             <input type="text" name="search" v-model="productSearch" placeholder="Search products" class="form-control" v-on:keyup="searchProducts">
         </div>
@@ -23,8 +25,9 @@
                     <td>{{ product.name }}</td>
                     <td>{{ product.description }}</td>
                     <td>{{ product.price }}</td>
+                    <td><img :src="product.image" alt="Product Image" width="40px"></td>
                     <td>
-                        <router-link :to="{name: 'edit_product', params: { id: product.id }}" class="btn btn-primary">Edit</router-link>
+                        <router-link :to="{name: 'buy_product', params: { id: product.id }}" class="btn btn-primary">Buy</router-link>
                         <router-link :to="{name: 'delete_product', params: { id: product.id }}" class="btn btn-danger">Delete</router-link>
                     </td>
                 </tr>
@@ -41,7 +44,7 @@
                 products: [],
                 originalProducts: [],
                 productSearch: '' ,
-                sort: 0  // 0 asc, 1 des
+                sort: 'asc'  // 0 asc, 1 des
             }
         },
 
@@ -56,14 +59,26 @@
                 this.$http.get('http://localhost:3000/api/products').then((response) => {
                     this.products = response.body;
                     this.originalProducts = this.products;
-                    this.sortCoins();
+                    //this.sortCoins();
                 }, (response) => {
 
                 });
             },
-            sortCoins: function()
-            {   //falta fer el if de sort 
-                this.products.sort((a, b) => a.price - b.price);
+            toggleSortOrder: function()
+            {
+                this.sort = this.sort === 'asc' ? 'desc' : 'asc';
+                this.sortProducts();
+            },
+
+            sortProducts: function()
+            {
+                this.products.sort((a, b) => {
+                    if (this.sort === 'asc') {
+                        return a.price - b.price;
+                    } else {
+                        return b.price - a.price;
+                    }
+                });
             },
 
             searchProducts: function()

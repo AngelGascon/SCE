@@ -10,9 +10,8 @@ import App from './App.vue'
 
 const AllProducts = require('./assets/js/components/all-products.vue');
 const CreateProduct = require('./assets/js/components/create-product.vue');
-const EditProduct = require('./assets/js/components/edit-product.vue');
+const BuyProduct = require('./assets/js/components/buy-product.vue');
 const DeleteProduct = require('./assets/js/components/delete-product.vue');
-
 const routes = [
     {
         name: 'all_products',
@@ -25,9 +24,9 @@ const routes = [
         component: CreateProduct
     },
     {
-        name: 'edit_product',
-        path: '/products/edit/:id',
-        component: EditProduct
+        name: 'buy_product',
+        path: '/products/buy/:id',
+        component: BuyProduct
     },
     {
         name: 'delete_product',

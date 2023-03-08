@@ -1,27 +1,38 @@
 [
     {
+    "id": 2,
         "name": "Bitcoin",
-        "description": "La mes popu",
-        "price": "32.99"
+        "description": "bit coin",
+        "price": "1600.99",
+        "image": "https://cryptologos.cc/logos/bitcoin-btc-logo.png"
+    
     },
     {
+        "id": 2,
         "name": "Etherium",
         "description": "etherium coin",
-        "price": "49.99"
+        "price": "49.99",
+        "image": "https://cryptologos.cc/logos/ethereum-eth-logo.png"
     },
     {
-        "name": "Doguecoin",
+        "id": 3,
+        "name": "Tether",
         "description": "cacacoin",
-        "price": "149.99"
+        "price": "149.99",
+        "image": "https://cryptologos.cc/logos/tether-usdt-logo.png"
     },
     {
-        "name": "Danicion",
-        "description": "La millor no hi ha dubte",
-        "price": "10000000.69"
-    },
-    {
-        "name": "Boofcoin",
+        "id": 4,
+        "name": "Binancecoin",
         "description": "Jo trec un 7 a ESO",
-        "price": "104.99"
+        "price": "104.99",
+        "image": "https://cryptologos.cc/logos/binance-coin-bnb-logo.png?v=002"
+    },
+    {
+        "id": 5,
+        "name": "Dogecoin",
+        "description": "Jo trec un 10 a ESO",
+        "price": "10444.99",
+        "image": "https://cryptologos.cc/logos/dogecoin-doge-logo.png?v=002"
     }
 ]

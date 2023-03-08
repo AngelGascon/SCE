@@ -82,7 +82,7 @@ app.post('/api/product/create', function(req, res) {
     });
 });
 
-app.patch('/api/product/edit/:id', function(req, res) {
+app.patch('/api/product/buy/:id', function(req, res) {
     fs.readFile(PRODUCTS_FILE, function(err, data) {
         if (err) {
             console.error(err);
