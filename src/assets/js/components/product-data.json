@@ -1,11 +1,10 @@
 [
     {
-    "id": 2,
+        "id": 2,
         "name": "Bitcoin",
         "description": "bit coin",
         "price": "1600.99",
         "image": "https://cryptologos.cc/logos/bitcoin-btc-logo.png"
-    
     },
     {
         "id": 2,

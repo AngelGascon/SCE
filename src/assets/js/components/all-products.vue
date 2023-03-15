@@ -2,13 +2,18 @@
     <div id="all-products">
         <h1>All Products</h1>
 
-        <p><router-link :to="{ name: 'create_product' }" class="btn btn-primary">Create Product</router-link></p>
+        <!-- <p><router-link :to="{ name: 'create_product' }" class="btn btn-primary">Create Product</router-link></p> -->
         <p class="btn btn-primary" @click="toggleSortOrder">
             {{ sort === 'asc' ? 'Sort Descending' : 'Sort Ascending' }}
         </p>
         <div class="form-group">
             <input type="text" name="search" v-model="productSearch" placeholder="Search products" class="form-control" v-on:keyup="searchProducts">
         </div>
+        <ul v-if="products.length">
+            <il v-for="product in products">
+                {{ product.name }}
+            </il>
+        </ul>
 
         <table class="table table-hover">
             <thead>
@@ -44,7 +49,7 @@
                 products: [],
                 originalProducts: [],
                 productSearch: '' ,
-                sort: 'asc'  // 0 asc, 1 des
+                sort: 'asc'
             }
         },
 
@@ -59,10 +64,7 @@
                 this.$http.get('http://localhost:3000/api/products').then((response) => {
                     this.products = response.body;
                     this.originalProducts = this.products;
-                    //this.sortCoins();
-                }, (response) => {
-
-                });
+                }, (response) => {});
             },
             toggleSortOrder: function()
             {
@@ -88,7 +90,7 @@
                     this.products = this.originalProducts;
                     return;
                 }
-
+                
                 var searchedProducts = [];
                 for(var i = 0; i < this.originalProducts.length; i++)
                 {
