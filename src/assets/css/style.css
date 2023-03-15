@@ -13,3 +13,29 @@ td {
     text-align: center;
     font-size: 18px;
 }
+/* CSS */
+.buy {
+    animation: buy 1s ease-out;
+  }
+  
+  @keyframes buy {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+  }
+
+@keyframes parpadeo {
+    0% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  
+  .parpadeo {
+    animation: parpadeo 1s infinite;
+  }

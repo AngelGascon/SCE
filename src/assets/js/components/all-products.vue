@@ -1,7 +1,10 @@
 <template>
     <div id="all-products">
         <h1>All Products</h1>
-
+        
+        <button id="boton-carrito" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">
+            <img src="img/carrito.png" width="40px">
+        </button>
         <p><router-link :to="{ name: 'create_product' }" class="btn btn-primary">Create Product</router-link></p>
         <p class="btn btn-primary" @click="toggleSortOrder">
             {{ sort === 'asc' ? 'Sort Descending' : 'Sort Ascending' }}
@@ -29,6 +32,7 @@
                     <td>
                         <router-link :to="{name: 'buy_product', params: { id: product.id }}" class="btn btn-primary">Buy</router-link>
                         <router-link :to="{name: 'delete_product', params: { id: product.id }}" class="btn btn-danger">Delete</router-link>
+                        <button id="boton-compra" class="btn btn-primary" @click="comprar">Comprar</button>
                     </td>
                 </tr>
             </tbody>
@@ -37,6 +41,8 @@
 </template>
 
 <script>
+import { setMaxIdleHTTPParsers } from 'http';
+
 
     export default{
         data(){
@@ -100,6 +106,15 @@
                 }
 
                 this.products = searchedProducts;
+            }, 
+            comprar() {
+                const botonCarrito = document.getElementById('boton-carrito');
+                
+                botonCarrito.classList.add('parpadeo');
+                setTimeout(() => {botonCarrito.classList.remove('parpadeo');}, 500);
+                
+                botonCarrito.classList.add('buy');
+                setTimeout(() => {botonCarrito.classList.remove('buy');}, 1000);
             }
         }
     }
