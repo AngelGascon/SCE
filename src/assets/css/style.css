@@ -1,12 +1,21 @@
 body
 {
-    background: #F5F5F5;
+    background: #323232;
+}
+
+.page-header {
+    border-radius: 25px;
+    margin: 20px;
+    background: #FFF;
     color: #333;
+    padding: 10px;
 }
 
 #page
 {
+    border-radius: 25px;
     background: #FFF;
+    color: #333;
     padding: 3rem;
 }
 td {

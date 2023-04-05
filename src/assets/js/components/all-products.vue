@@ -1,19 +1,14 @@
 <template>
     <div id="all-products">
+        
         <h1>All Products</h1>
 
-        <!-- <p><router-link :to="{ name: 'create_product' }" class="btn btn-primary">Create Product</router-link></p> -->
         <p class="btn btn-primary" @click="toggleSortOrder">
             {{ sort === 'asc' ? 'Sort Descending' : 'Sort Ascending' }}
         </p>
         <div class="form-group">
             <input type="text" name="search" v-model="productSearch" placeholder="Search products" class="form-control" v-on:keyup="searchProducts">
         </div>
-        <ul v-if="products.length">
-            <il v-for="product in products">
-                {{ product.name }}
-            </il>
-        </ul>
 
         <table class="table table-hover">
             <thead>
@@ -22,6 +17,7 @@
                 <td>Description</td>
                 <td>Price</td>
                 <td>Actions</td>
+                <td></td>
             </tr>
             </thead>
 
@@ -61,10 +57,15 @@
         methods: {
             fetchProductData: function()
             {
-                this.$http.get('http://localhost:3000/api/products').then((response) => {
-                    this.products = response.body;
-                    this.originalProducts = this.products;
-                }, (response) => {});
+                fetch('http://localhost:3000/api/products')
+                    .then(response => response.json())
+                    .then(data => {
+                        this.products = data;
+                        this.originalProducts = this.products;
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
             },
             toggleSortOrder: function()
             {
