@@ -2,14 +2,14 @@
     <div id="all-products">
         
         <h1>All Products</h1>
-
-        <p class="btn btn-primary" @click="toggleSortOrder">
-            {{ sort === 'asc' ? 'Sort Descending' : 'Sort Ascending' }}
-        </p>
         <div class="input-group mb-3">
-            <input type="text" name="search" v-model="productSearch" placeholder="Search products" class="form-control" aria-label="Recipient's username" aria-describedby="basic-addon2" v-on:keyup.enter="searchProducts">
+            <input type="text" name="search" v-model="productSearch" placeholder="Search products" class="form-control" @keyup.enter="searchProducts">
             <div class="input-group-append">
-                <button class="btn btn-outline-secondary" type="button" v-on:click="searchProducts">Search</button>
+                <button class="btn btn-outline-secondary" type="button" @click="searchProducts">Search</button>
+                <button class="btn btn-outline-secondary" type="button" @click="toggleSortOrder">
+                    {{ sort === 'asc' ? 'Sort Descending' : 'Sort Ascending' }}
+                </button>
+                <button class="btn btn-outline-secondary" type="button" @click="resetSearchProducts">Reset</button>
             </div>
         </div>
 
@@ -106,6 +106,13 @@
                 }
 
                 this.products = searchedProducts;
+            },
+
+            resetSearchProducts: function()
+            {
+                this.productSearch = '';
+                this.products = this.originalProducts;
+                return;
             }
         }
     }
