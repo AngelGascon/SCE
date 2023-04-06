@@ -6,19 +6,22 @@
         <p class="btn btn-primary" @click="toggleSortOrder">
             {{ sort === 'asc' ? 'Sort Descending' : 'Sort Ascending' }}
         </p>
-        <div class="form-group">
-            <input type="text" name="search" v-model="productSearch" placeholder="Search products" class="form-control" v-on:keyup="searchProducts">
+        <div class="input-group mb-3">
+            <input type="text" name="search" v-model="productSearch" placeholder="Search products" class="form-control" aria-label="Recipient's username" aria-describedby="basic-addon2" v-on:keyup.enter="searchProducts">
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button" v-on:click="searchProducts">Search</button>
+            </div>
         </div>
 
         <table class="table table-hover">
             <thead>
-            <tr>
-                <td>Name</td>
-                <td>Description</td>
-                <td>Price</td>
-                <td>Actions</td>
-                <td></td>
-            </tr>
+                <tr>
+                    <td>Name</td>
+                    <td>Description</td>
+                    <td>Price</td>
+                    <td>Actions</td>
+                    <td></td>
+                </tr>
             </thead>
 
             <tbody>
