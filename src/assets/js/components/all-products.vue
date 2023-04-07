@@ -129,6 +129,16 @@ import { setMaxIdleHTTPParsers } from 'http';
         },
 
         methods: {
+            makePurchase: function () {
+                this.$http.get(`http://localhost:3000/api/makePurchase?price=${this.totalPriceCart}`)
+                .then((response) => {
+                    window.location.href = response.data.redirectUrl;
+                })
+                .catch(error => {
+                        alert('Error al realizar la compra');
+                });
+            },
+
             fetchProductData: function()
             {
                 fetch('http://localhost:3000/api/products')
