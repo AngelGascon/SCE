@@ -2,15 +2,8 @@
     <div id="all-products">
         
         <h1>All Products</h1>
-        <div class="input-group mb-3">
-            <div>
-                <input type="text" name="search" v-model="productSearch" placeholder="Search products" class="form-control" @keyup="getAutocompleteSuggestions" @keyup.enter="searchProducts">
-                <ul class="list-group" style="position:absolute; z-index: 3;" v-if="showAutocomplete">
-                    <li class="list-group-item" v-for="(suggestion, index) in autocompleteSuggestions" :key="index" @click="selectSuggestion(suggestion)">
-                        {{ suggestion }}
-                    </li>
-                </ul>
-            </div>
+        <div class="input-group mb-3" style="width: 100%;">
+            <input type="text" name="search" v-model="productSearch" placeholder="Search products" class="form-control" @keyup="getAutocompleteSuggestions" @keyup.enter="searchProducts">
             <div class="input-group-append">
                 <button class="btn btn-outline-secondary" type="button" @click="searchProducts">Search</button>
                 <button class="btn btn-outline-secondary" type="button" @click="toggleSortOrder">
@@ -19,7 +12,13 @@
                 <button class="btn btn-outline-secondary" type="button" @click="resetSearchProducts">Reset</button>
             </div>
         </div>
-
+        <div>
+            <ul class="list-group" style="position: absolute; z-index: 1; width: 49%;" v-if="showAutocomplete">
+                <li class="list-group-item" v-for="(suggestion, index) in autocompleteSuggestions" :key="index" @click="selectSuggestion(suggestion)">
+                    {{ suggestion }}
+                </li>
+            </ul>
+        </div>
         <table class="table table-hover">
             <thead>
                 <tr>
