@@ -47,18 +47,35 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <tr v-for="(cryptocurrency, index) in cryptoCart">
-                            <td>
-                                <img :src="cryptocurrency.image" width='32' height='32'>
-                            </td>
-                            <td>
-                                <p>{{ cryptocurrency.name }}</p>
-                                <p style="font-size: small;">{{ cryptocurrency.description }}</p>
-                            </td>
-                            <td>
-                                <p>€{{ cryptocurrency.price }}</p>
-                            </td>
-                        </tr>
+                        <table class="crypto-table">
+                            <thead>
+                            <tr>
+                                <th>Imagen</th>
+                                <th>Nombre</th>
+                                <th>Precio</th>
+                                <th>Eliminar</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr v-for="(cryptocurrency, index) in cryptoCart" :key="cryptocurrency.id">
+                                <td>
+                                <img :src="cryptocurrency.image" alt="" width="32" height="32">
+                                </td>
+                                <td style="width: 50%;">
+                                    <p>{{ cryptocurrency.name }}</p>
+                                    <p style="font-size: small;">{{ cryptocurrency.description }}</p>
+                                </td>
+                                <td>
+                                <h4>€{{ cryptocurrency.price }}</h4>
+                                </td>
+                                <td>
+                                <button @click="removeCrypto(index)" class="delete-button">
+                                    <img src="img/delete.png" alt="Eliminar" width="20px">
+                                </button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -123,6 +140,10 @@ import { setMaxIdleHTTPParsers } from 'http';
                 });
             },
 
+            removeItem: function (index) {
+                this.cartCryptos.splice(index, 1);
+            },
+
             searchProducts: function()
             {
                 if(this.productSearch == '')
@@ -161,6 +182,9 @@ import { setMaxIdleHTTPParsers } from 'http';
                     alert(`La moneda ${crypto.name} ya ha sido añadida anteriormente`);
                          
                 }
+            },
+            removeCrypto: function(index){
+                this.cryptoCart.splice(index, 1);
             },
 
             resetSearchProducts: function()

@@ -65,3 +65,61 @@ td {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
+.crypto-table {
+  border-collapse: collapse;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: #fff;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+
+.crypto-table th {
+  font-size: 1.1rem;
+  text-align: left;
+  padding: 12px 20px;
+  color: #444;
+}
+
+.crypto-table td {
+  vertical-align: middle;
+  border-top: 1px solid #f0f0f0;
+}
+
+.crypto-table td:first-child {
+  padding-left: 0;
+}
+
+.crypto-table td:last-child {
+  padding-right: 0;
+}
+
+.crypto-table img {
+  display: block;
+  margin: auto;
+}
+
+.crypto-table h4 {
+  font-size: 1.2rem;
+  margin-bottom: 4px;
+  color: #444;
+}
+
+.crypto-table .description {
+  font-size: 0.9rem;
+  color: #999;
+}
+
+.delete-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  padding: 0;
+}
+
+.delete-button:hover img {
+  transform: scale(1.1);
+  transition: all 0.3s ease;
+}
