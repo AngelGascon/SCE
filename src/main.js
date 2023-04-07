@@ -10,7 +10,6 @@ import App from './App.vue'
 
 const AllProducts = require('./assets/js/components/all-products.vue');
 const CreateProduct = require('./assets/js/components/create-product.vue');
-const DeleteProduct = require('./assets/js/components/delete-product.vue');
 const routes = [
     {
         name: 'all_products',
@@ -22,11 +21,7 @@ const routes = [
         path: '/products/create',
         component: CreateProduct
     },
-    {
-        name: 'delete_product',
-        path: '/products/delete/:id',
-        component: DeleteProduct
-    }
+    
 ];
 var router = new VueRouter({ routes: routes, mode: 'history' });
 new Vue(Vue.util.extend({ router }, App)).$mount('#app');

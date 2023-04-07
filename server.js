@@ -82,32 +82,7 @@ app.post('/api/product/create', function(req, res) {
 });
 
 
-app.delete('/api/product/delete/:id', function(req, res) {
-    fs.readFile(PRODUCTS_FILE, function(err, data) {
-        if (err) {
-            console.error(err);
-            process.exit(1);
-        }
-        var products = JSON.parse(data);
 
-        for(var i = 0; i <= products.length; i++)
-        {
-            if(products[i]['id'] == req.params.id)
-            {
-                products.splice(i, 1);
-
-                fs.writeFile(PRODUCTS_FILE, JSON.stringify(products, null, 4), function(err) {
-                    if (err) {
-                        console.error(err);
-                        process.exit(1);
-                    }
-                    res.json(products);
-                });
-                break;
-            }
-        }
-    });
-});
 
 
 app.listen(app.get('port'), function() {
