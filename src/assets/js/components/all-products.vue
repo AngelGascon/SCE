@@ -3,7 +3,14 @@
         
         <h1>All Products</h1>
         <div class="input-group mb-3">
-            <input type="text" name="search" v-model="productSearch" placeholder="Search products" class="form-control" @keyup.enter="searchProducts">
+            <div>
+                <input type="text" name="search" v-model="productSearch" placeholder="Search products" class="form-control" @keyup="getAutocompleteSuggestions" @keyup.enter="searchProducts">
+                <ul class="list-group" style="position:absolute; z-index: 3;" v-if="showAutocomplete">
+                    <li class="list-group-item" v-for="(suggestion, index) in autocompleteSuggestions" :key="index" @click="selectSuggestion(suggestion)">
+                        {{ suggestion }}
+                    </li>
+                </ul>
+            </div>
             <div class="input-group-append">
                 <button class="btn btn-outline-secondary" type="button" @click="searchProducts">Search</button>
                 <button class="btn btn-outline-secondary" type="button" @click="toggleSortOrder">
@@ -74,8 +81,6 @@
 <script>
 import { setMaxIdleHTTPParsers } from 'http';
 
-
-
     export default{
         data(){
             return{
@@ -84,7 +89,9 @@ import { setMaxIdleHTTPParsers } from 'http';
                 cryptoCart: [],
                 product:{},
                 productSearch: '' ,
-                sort: 'asc'
+                sort: 'asc',
+                autocompleteSuggestions: [],
+                showAutocomplete: false
             }
         },
 
@@ -162,12 +169,28 @@ import { setMaxIdleHTTPParsers } from 'http';
                          
                 }
             },
-
             resetSearchProducts: function()
             {
                 this.productSearch = '';
                 this.products = this.originalProducts;
                 return;
+            },
+            getAutocompleteSuggestions: function() {
+                if (this.productSearch.length > 0) {
+                    // Make an AJAX call here to fetch autocomplete suggestions
+                    // and update the autocompleteSuggestions array
+                    // For demo purposes, I'm just manually setting the suggestions here:
+                    this.autocompleteSuggestions = ['Product 1', 'Product 2', 'Product 3'];
+                    this.showAutocomplete = true;
+                } else {
+                    this.autocompleteSuggestions = [];
+                    this.showAutocomplete = false;
+                }
+            },
+            selectSuggestion: function(suggestion) {
+                this.productSearch = suggestion;
+                this.showAutocomplete = false;
+                // Call your searchProducts method here with the selected suggestion
             }
         }
     }
