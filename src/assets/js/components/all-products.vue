@@ -31,12 +31,22 @@
                     <td>{{ product.price }}</td>
                     <td><img :src="product.image" alt="Product Image" width="40px"></td>
                     <td>
-                        <button id="boton-compra" class="btn btn-primary" @click="comprar(product.id)">Comprar</button>
+                        <button id="boton-compra" class="btn btn-primary" @click="comprar(product)">Comprar</button>
                     </td>
                 </tr>
             </tbody>
         </table>
-        {{ test }}
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Shopping Cart</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                    <p>hola</p>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -49,7 +59,7 @@ import { setMaxIdleHTTPParsers } from 'http';
             return{
                 products: [],
                 originalProducts: [],
-                productsBuy: [],
+                cryptoCart: [],
                 product:{},
                 productSearch: '' ,
                 sort: 'asc'
@@ -111,19 +121,24 @@ import { setMaxIdleHTTPParsers } from 'http';
 
                 this.products = searchedProducts;
             }, 
-            comprar: function(id) {
+            comprar: function(crypto) {
+                
+                
+                if (!this.cryptoCart.map(x => x.id).includes(crypto.id)) { 
+                this.cryptoCart.push(crypto);
+                
+                console.log(this.crypto);
                 
                 const botonCarrito = document.getElementById('boton-carrito');
-                
                 botonCarrito.classList.add('parpadeo');
                 setTimeout(() => {botonCarrito.classList.remove('parpadeo');}, 500);
-                
                 botonCarrito.classList.add('buy');
                 setTimeout(() => {botonCarrito.classList.remove('buy');}, 1000);
-                this.product  = this.products[id];
-                console.log(this.product.name);
-                
-                //test = "hola"
+              
+                } else {
+                    alert(`La moneda ${crypto.name} ya ha sido añadida anteriormente`);
+                         
+                }
             },
 
             resetSearchProducts: function()
