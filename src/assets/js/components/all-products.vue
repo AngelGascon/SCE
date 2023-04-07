@@ -31,9 +31,7 @@
                     <td>{{ product.price }}</td>
                     <td><img :src="product.image" alt="Product Image" width="40px"></td>
                     <td>
-                        <router-link :to="{name: 'buy_product', params: { id: product.id }}" class="btn btn-primary">Buy</router-link>
-                        <router-link :to="{name: 'delete_product', params: { id: product.id }}" class="btn btn-danger">Delete</router-link>
-                        <button id="boton-compra" class="btn btn-primary" @click="comprar">Comprar</button>
+                        <button id="boton-compra" class="btn btn-primary" @click="comprar(product.id)">Comprar</button>
                     </td>
                 </tr>
             </tbody>
@@ -113,8 +111,8 @@ import { setMaxIdleHTTPParsers } from 'http';
 
                 this.products = searchedProducts;
             }, 
-            comprar() {
-                console.log("hola");
+            comprar: function(id) {
+                
                 const botonCarrito = document.getElementById('boton-carrito');
                 
                 botonCarrito.classList.add('parpadeo');
@@ -122,9 +120,9 @@ import { setMaxIdleHTTPParsers } from 'http';
                 
                 botonCarrito.classList.add('buy');
                 setTimeout(() => {botonCarrito.classList.remove('buy');}, 1000);
-                this.getProduct = this.products[0];
+                this.product  = this.products[id];
+                console.log(this.product.name);
                 
-                this.test = this.product;
                 //test = "hola"
             },
 

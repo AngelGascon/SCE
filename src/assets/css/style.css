@@ -28,7 +28,7 @@ td {
 .buy {
     animation: buy 1s ease-out;
   }
-  
+
   @keyframes buy {
     0% { transform: scale(1); }
     50% { transform: scale(1.2); }

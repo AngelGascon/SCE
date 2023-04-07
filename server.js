@@ -81,37 +81,6 @@ app.post('/api/product/create', function(req, res) {
     });
 });
 
-app.patch('/api/product/buy/:id', function(req, res) {
-    fs.readFile(PRODUCTS_FILE, function(err, data) {
-        if (err) {
-            console.error(err);
-            process.exit(1);
-        }
-        var products = JSON.parse(data);
-
-        for(var i = 0; i <= products.length; i++)
-        {
-            if(products[i]['id'] == req.params.id)
-            {
-                var product = products[i];
-                product.name = req.body.name;
-                product.price = req.body.price;
-
-                products.splice(i, 1);
-                products.push(product);
-
-                fs.writeFile(PRODUCTS_FILE, JSON.stringify(products, null, 4), function(err) {
-                    if (err) {
-                        console.error(err);
-                        process.exit(1);
-                    }
-                    res.json(products);
-                });
-                break;
-            }
-        }
-    });
-});
 
 app.delete('/api/product/delete/:id', function(req, res) {
     fs.readFile(PRODUCTS_FILE, function(err, data) {
