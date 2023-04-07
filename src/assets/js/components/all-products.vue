@@ -2,9 +2,6 @@
     <div id="all-products">
         
         <h1>All Products</h1>
-        <button id="boton-carrito" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">
-          <img src="img/carrito.png" width="40px">
-        </button>
         <div class="input-group mb-3">
             <input type="text" name="search" v-model="productSearch" placeholder="Search products" class="form-control" @keyup.enter="searchProducts">
             <div class="input-group-append">
@@ -59,7 +56,7 @@
                                 <p style="font-size: small;">{{ cryptocurrency.description }}</p>
                             </td>
                             <td>
-                                <p>€{{ cryptocurrency.lastQuote }}</p>
+                                <p>€{{ cryptocurrency.price }}</p>
                             </td>
                         </tr>
                     </div>
