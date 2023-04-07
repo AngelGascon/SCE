@@ -1,26 +1,27 @@
 <template>
     <div id="all-products">
-        <h1>All Products</h1>
         
-        <button id="boton-carrito" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">
-            <img src="img/carrito.png" width="40px">
-        </button>
-        <p><router-link :to="{ name: 'create_product' }" class="btn btn-primary">Create Product</router-link></p>
-        <p class="btn btn-primary" @click="toggleSortOrder">
-            {{ sort === 'asc' ? 'Sort Descending' : 'Sort Ascending' }}
-        </p>
-        <div class="form-group">
-            <input type="text" name="search" v-model="productSearch" placeholder="Search products" class="form-control" v-on:keyup="searchProducts">
+        <h1>All Products</h1>
+        <div class="input-group mb-3">
+            <input type="text" name="search" v-model="productSearch" placeholder="Search products" class="form-control" @keyup.enter="searchProducts">
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button" @click="searchProducts">Search</button>
+                <button class="btn btn-outline-secondary" type="button" @click="toggleSortOrder">
+                    {{ sort === 'asc' ? 'Sort Descending' : 'Sort Ascending' }}
+                </button>
+                <button class="btn btn-outline-secondary" type="button" @click="resetSearchProducts">Reset</button>
+            </div>
         </div>
 
         <table class="table table-hover">
             <thead>
-            <tr>
-                <td>Name</td>
-                <td>Description</td>
-                <td>Price</td>
-                <td>Actions</td>
-            </tr>
+                <tr>
+                    <td>Name</td>
+                    <td>Description</td>
+                    <td>Price</td>
+                    <td>Actions</td>
+                    <td></td>
+                </tr>
             </thead>
 
             <tbody>
@@ -53,8 +54,7 @@ import { setMaxIdleHTTPParsers } from 'http';
                 productsBuy: [],
                 product:{},
                 productSearch: '' ,
-                sort: 'asc',  // 0 asc, 1 des
-                test: ''
+                sort: 'asc'
             }
         },
 
@@ -66,13 +66,15 @@ import { setMaxIdleHTTPParsers } from 'http';
         methods: {
             fetchProductData: function()
             {
-                this.$http.get('http://localhost:3000/api/products').then((response) => {
-                    this.products = response.body;
-                    this.originalProducts = this.products;
-                    //this.sortCoins();
-                }, (response) => {
-
-                });
+                fetch('http://localhost:3000/api/products')
+                    .then(response => response.json())
+                    .then(data => {
+                        this.products = data;
+                        this.originalProducts = this.products;
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
             },
             toggleSortOrder: function()
             {
@@ -98,7 +100,7 @@ import { setMaxIdleHTTPParsers } from 'http';
                     this.products = this.originalProducts;
                     return;
                 }
-
+                
                 var searchedProducts = [];
                 for(var i = 0; i < this.originalProducts.length; i++)
                 {
@@ -124,6 +126,13 @@ import { setMaxIdleHTTPParsers } from 'http';
                 
                 this.test = this.product;
                 //test = "hola"
+            },
+
+            resetSearchProducts: function()
+            {
+                this.productSearch = '';
+                this.products = this.originalProducts;
+                return;
             }
         }
     }

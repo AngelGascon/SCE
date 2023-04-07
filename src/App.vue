@@ -1,5 +1,7 @@
 <template>
     <div class="container">
+        <!-- Fixed header -->
+        <personal-header></personal-header>
         <div id="page">
             <transition name="fade">
                 <router-view></router-view>
@@ -18,8 +20,12 @@
 </style>
 
 <script>
+import PersonalHeader from './assets/js/components/PersonalHeader.vue';
 
     export default{
+        components: {
+            PersonalHeader
+        },
         data(){
             return{
 
