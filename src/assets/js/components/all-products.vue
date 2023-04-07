@@ -57,16 +57,16 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr v-for="(cryptocurrency, index) in cryptoCart" :key="cryptocurrency.id">
+                            <tr v-for="(cryptocoin, index) in cryptoCart" :key="cryptocoin.id">
                                 <td>
-                                <img :src="cryptocurrency.image" alt="" width="32" height="32">
+                                <img :src="cryptocoin.image" alt="" width="32" height="32">
                                 </td>
                                 <td style="width: 50%;">
-                                    <p>{{ cryptocurrency.name }}</p>
-                                    <p style="font-size: small;">{{ cryptocurrency.description }}</p>
+                                    <p>{{ cryptocoin.name }}</p>
+                                    <p style="font-size: small;">{{ cryptocoin.description }}</p>
                                 </td>
                                 <td>
-                                <h4>€{{ cryptocurrency.price }}</h4>
+                                <h4>€{{ cryptocoin.price }}</h4>
                                 </td>
                                 <td>
                                 <button @click="removeCrypto(index)" class="delete-button">
@@ -74,12 +74,20 @@
                                 </button>
                                 </td>
                             </tr>
+                            <tr>
+                                <td colspan="1"></td>
+                                <td class="text-left">
+                                    <h4 class="mb-0">Total: {{ cartPrice }} €</h4>
+                                </td>
+                                <td class="text-right">
+                                    <button @click="makePurchase()" class="btn btn-primary">Comprar</button>
+                                </td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                        <button type="button" class="btn btn-primary">Realizar compra</button>
                     </div>
                 </div>
             </div>
@@ -103,6 +111,16 @@ import { setMaxIdleHTTPParsers } from 'http';
                 productSearch: '' ,
                 sort: 'asc'
             }
+        },
+
+        computed: {
+            cartPrice() {
+                let total = 0;
+                this.cryptoCart.forEach(x => {
+                    total += x.price;
+                });
+                return total.toFixed(2);
+            },
         },
 
         created: function()
