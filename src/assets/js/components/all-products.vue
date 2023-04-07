@@ -37,6 +37,7 @@
                 </tr>
             </tbody>
         </table>
+        {{ test }}
     </div>
 </template>
 
@@ -49,8 +50,11 @@ import { setMaxIdleHTTPParsers } from 'http';
             return{
                 products: [],
                 originalProducts: [],
+                productsBuy: [],
+                product:{},
                 productSearch: '' ,
-                sort: 'asc'  // 0 asc, 1 des
+                sort: 'asc',  // 0 asc, 1 des
+                test: ''
             }
         },
 
@@ -108,6 +112,7 @@ import { setMaxIdleHTTPParsers } from 'http';
                 this.products = searchedProducts;
             }, 
             comprar() {
+                console.log("hola");
                 const botonCarrito = document.getElementById('boton-carrito');
                 
                 botonCarrito.classList.add('parpadeo');
@@ -115,6 +120,10 @@ import { setMaxIdleHTTPParsers } from 'http';
                 
                 botonCarrito.classList.add('buy');
                 setTimeout(() => {botonCarrito.classList.remove('buy');}, 1000);
+                this.getProduct = this.products[0];
+                
+                this.test = this.product;
+                //test = "hola"
             }
         }
     }
