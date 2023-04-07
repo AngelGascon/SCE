@@ -2,6 +2,9 @@
     <div id="all-products">
         
         <h1>All Products</h1>
+        <button id="boton-carrito" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">
+          <img src="img/carrito.png" width="40px">
+        </button>
         <div class="input-group mb-3">
             <input type="text" name="search" v-model="productSearch" placeholder="Search products" class="form-control" @keyup.enter="searchProducts">
             <div class="input-group-append">
@@ -36,22 +39,44 @@
                 </tr>
             </tbody>
         </table>
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-lg">
+        <!-- Agregar modal aquí -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Shopping Cart</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                    <p>hola</p>
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Carrito de compras</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <tr v-for="(cryptocurrency, index) in cryptoCart">
+                            <td>
+                                <img :src="cryptocurrency.image" width='32' height='32'>
+                            </td>
+                            <td>
+                                <p>{{ cryptocurrency.name }}</p>
+                                <p style="font-size: small;">{{ cryptocurrency.description }}</p>
+                            </td>
+                            <td>
+                                <p>€{{ cryptocurrency.lastQuote }}</p>
+                            </td>
+                        </tr>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-primary">Realizar compra</button>
+                    </div>
                 </div>
             </div>
         </div>
+        <!-- Fin modal -->
     </div>
 </template>
 
 <script>
 import { setMaxIdleHTTPParsers } from 'http';
+
 
 
     export default{
