@@ -139,7 +139,7 @@ import { setMaxIdleHTTPParsers } from 'http';
                         alert('Error al realizar la compra');
                 });
             },
-
+ 
             fetchProductData: function()
             {
                 fetch('http://localhost:3000/api/products')

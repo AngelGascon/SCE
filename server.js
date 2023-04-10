@@ -57,6 +57,15 @@ app.get('/api/product/:id', function(req, res) {
     });
 });
 
+const paypal = require('paypal-rest-sdk'); //npm install paypal-rest-sdk
+
+paypal.configure({
+    'mode': 'sandbox',
+    'client_id': 'AUcp7NI6Je5_u5RSRMYduQI41v4qyiahyWjSU3y-Eg5vnrlwljiIDHnOFrbT8UEpWE4FS4_E4ktyCOOT',
+    'client_secret': 'EMvMotybEmL7NmnnHbHoPVZ_sfxw8xny-ldAcU1KMq-cVnbWo_IBNodRZYc3NzmCpSvMGpDHGlUmJt9R'
+});
+
+
 app.get('/api/makePurchase', function (req, res) {
     const price = req.query.price;
 
@@ -77,7 +86,16 @@ app.get('/api/makePurchase', function (req, res) {
             "cancel_url": "http://localhost:3000/cancel"
         }
     };
-
+    
+    paypal.payment.create(paymentData, (error, payment) => {
+        if (error) {
+            console.error(error);
+            res.status(500).send('Error al crear el pagament');
+        } else {
+            const redirectUrl = payment.links.find((link) => link.rel === 'approval_url').href;
+            res.send({ redirectUrl });
+        }
+    });
 });
 
 
