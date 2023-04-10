@@ -4,6 +4,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
 
+
 var PRODUCTS_FILE = path.join(__dirname, 'src/assets/js/components/product-data.json');
 
 app.set('port', (process.env.PORT || 3000));
@@ -56,29 +57,27 @@ app.get('/api/product/:id', function(req, res) {
     });
 });
 
-app.post('/api/product/create', function(req, res) {
+app.get('/api/makePurchase', function (req, res) {
+    const price = req.query.price;
 
-    fs.readFile(PRODUCTS_FILE, function(err, data) {
-        if (err) {
-            console.error(err);
-            process.exit(1);
+    const paymentData = {
+        "intent": "sale",
+        "payer": {
+            "payment_method": "paypal"
+        },
+        "transactions": [{
+            "amount": {
+                "total": price,
+                "currency": "USD"
+            },
+            "description": "Compra en línea"
+        }],
+        "redirect_urls": {
+            "return_url": "http://localhost:3000/process",
+            "cancel_url": "http://localhost:3000/cancel"
         }
-        var products = JSON.parse(data);
+    };
 
-        var newProduct = {
-            id: Date.now(),
-            name: req.body.name,
-            price: req.body.price,
-        };
-        products.push(newProduct);
-        fs.writeFile(PRODUCTS_FILE, JSON.stringify(products, null, 4), function(err) {
-            if (err) {
-                console.error(err);
-                process.exit(1);
-            }
-            res.json(products);
-        });
-    });
 });
 
 

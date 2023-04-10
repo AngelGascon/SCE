@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <!-- Fixed header -->
-        <personal-header></personal-header>
+        <personal-header :cryptoCart="cryptoCart" />
         <div id="page">
             <transition name="fade">
                 <router-view></router-view>
@@ -22,14 +22,19 @@
 <script>
 import PersonalHeader from './assets/js/components/PersonalHeader.vue';
 
-    export default{
-        components: {
-            PersonalHeader
-        },
-        data(){
-            return{
-
-            }
+    export default {
+    components: {
+        PersonalHeader
+    },
+    data() {
+        return {
+        cryptoCart: [] // aquí asigna el valor de la propiedad
         }
     }
+    }
 </script>
+
+
+
+
+

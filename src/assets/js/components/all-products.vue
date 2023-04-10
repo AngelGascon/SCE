@@ -19,6 +19,7 @@
                     <td>Name</td>
                     <td>Description</td>
                     <td>Price</td>
+                    <td></td>
                     <td>Actions</td>
                     <td></td>
                 </tr>
@@ -80,7 +81,7 @@
                                     <h4 class="mb-0">Total: {{ cartPrice }} €</h4>
                                 </td>
                                 <td class="text-right">
-                                    <button @click="makePurchase()" class="btn btn-primary">Comprar</button>
+                                    <button type="buttom" @click="makePurchase" class="btn btn-primary">Comprar</button>
                                 </td>
                             </tr>
                             </tbody>
@@ -130,7 +131,7 @@ import { setMaxIdleHTTPParsers } from 'http';
 
         methods: {
             makePurchase: function () {
-                this.$http.get(`http://localhost:3000/api/makePurchase?price=${this.totalPriceCart}`)
+                this.$http.get(`http://localhost:3000/api/makePurchase?price=${this.cartPrice}`)
                 .then((response) => {
                     window.location.href = response.data.redirectUrl;
                 })
