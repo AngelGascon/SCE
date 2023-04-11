@@ -2,8 +2,9 @@
     <div id="all-products">
         
         <h1>All Products</h1>
+        <!-- SearchBar input and buttons -->
         <div class="input-group mb-3" style="width: 100%;">
-            <input type="text" name="search" v-model="productSearch" placeholder="Search products" class="form-control" @keyup="getAutocompleteSuggestions" @keyup.enter="searchProducts">
+            <input type="text" name="search" v-model="productSearch" placeholder="Search products" class="form-control" @keyup="getSearchSuggestions" @keyup.enter="searchProducts">
             <div class="input-group-append">
                 <button class="btn btn-outline-secondary" type="button" @click="searchProducts">Search</button>
                 <button class="btn btn-outline-secondary" type="button" @click="toggleSortOrder">
@@ -12,13 +13,13 @@
                 <button class="btn btn-outline-secondary" type="button" @click="resetSearchProducts">Reset</button>
             </div>
         </div>
-        <div>
-            <ul class="list-group" style="position: absolute; z-index: 1; width: 49%;" v-if="showAutocomplete">
-                <li class="list-group-item" v-for="(suggestion, index) in autocompleteSuggestions" :key="index" @click="selectSuggestion(suggestion)">
-                    {{ suggestion }}
-                </li>
-            </ul>
-        </div>
+        <!-- Search Suggestions -->
+        <ul class="list-group" style="position: absolute; z-index: 1; width: 50%;" v-if="showAutocomplete">
+            <li class="list-group-item" v-for="(suggestion, index) in autocompleteSuggestions" :key="index" @click="selectSuggestion(suggestion)">
+                {{ suggestion }}
+            </li>
+        </ul>
+        
         <table class="table table-hover">
             <thead>
                 <tr>
@@ -150,8 +151,7 @@ import { setMaxIdleHTTPParsers } from 'http';
                 this.products = searchedProducts;
             }, 
             comprar: function(crypto) {
-                
-                
+                                
                 if (!this.cryptoCart.map(x => x.id).includes(crypto.id)) { 
                 this.cryptoCart.push(crypto);
                 
@@ -174,13 +174,21 @@ import { setMaxIdleHTTPParsers } from 'http';
                 this.products = this.originalProducts;
                 return;
             },
-            getAutocompleteSuggestions: function() {
+            getSearchSuggestions: function() {
+                //Don't do a request if the user doesn't input data
                 if (this.productSearch.length > 0) {
-                    // Make an AJAX call here to fetch autocomplete suggestions
-                    // and update the autocompleteSuggestions array
-                    // For demo purposes, I'm just manually setting the suggestions here:
-                    this.autocompleteSuggestions = ['Product 1', 'Product 2', 'Product 3'];
-                    this.showAutocomplete = true;
+                    //AJAX request
+                    fetch(`http://localhost:3000/api/searchSuggestion?searchData=${this.productSearch}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if(data.length > 0) {
+                            this.autocompleteSuggestions = data;
+                            this.showAutocomplete = true;
+                        }
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
                 } else {
                     this.autocompleteSuggestions = [];
                     this.showAutocomplete = false;
@@ -190,6 +198,7 @@ import { setMaxIdleHTTPParsers } from 'http';
                 this.productSearch = suggestion;
                 this.showAutocomplete = false;
                 // Call your searchProducts method here with the selected suggestion
+                this.searchProducts();
             }
         }
     }

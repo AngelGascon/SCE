@@ -81,6 +81,25 @@ app.post('/api/product/create', function(req, res) {
     });
 });
 
+//SearchSuggestion
+app.get('/api/searchSuggestion', function (req, res) {
+    
+    fs.readFile(PRODUCTS_FILE, function (err, data) {
+        if (err) {
+            console.error(err);
+            process.exit(1);
+        }
+        var cryptoFile = JSON.parse(data);
+        const searchData = req.query.searchData;
+
+        if (searchData == "")
+            res.json(cryptoFile.filter(x => x.name));
+        else {
+            res.json(cryptoFile.filter(x => x.name.toLowerCase().startsWith(searchData)).map(x => x.name));
+        }
+    });
+});
+
 
 
 
