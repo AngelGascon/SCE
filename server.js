@@ -120,13 +120,14 @@ app.get('/purchase', function (req, res) {
         };
   
         console.log(paymentInfo);
-  
-        res.redirect('http://localhost:8080');
+        
+        res.redirect(`http://localhost:8080//payment/1?paymentData=${JSON.stringify(paymentData)}`);
+
       }
     });
   });
   
- //res.redirect(`http://localhost:8080?paymentData=${JSON.stringify(paymentData)}`);
+ 
 app.get('/cancel', function (req, res) {
     res.redirect(`http://localhost:8080`);
 });

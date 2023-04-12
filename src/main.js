@@ -8,8 +8,16 @@ Vue.use(VueResource);
 
 import App from './App.vue'
 
+
 const AllProducts = require('./assets/js/components/all-products.vue');
+
+const PaymentInfo = require('./assets/js/components/payment-info.vue');
 const routes = [
+    {
+        path: '/payment/:paymentId',
+        name: 'PaymentInfo',
+        component: PaymentInfo
+      },
     {
         name: 'all_products',
         path: '/',
