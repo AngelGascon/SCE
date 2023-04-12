@@ -1,7 +1,7 @@
 <template>
     <div id="all-products">
         
-        <h1>All Products</h1>
+        <h2>All Products</h2>
         <!-- SearchBar input and buttons -->
         <div class="input-group mb-3" style="width: 100%;">
             <input type="text" name="search" v-model="productSearch" placeholder="Search products" class="form-control" @keyup="getSearchSuggestions" @keyup.enter="searchProducts">
@@ -19,30 +19,24 @@
                 {{ suggestion }}
             </li>
         </ul>
-        
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <td>Name</td>
-                    <td>Description</td>
-                    <td>Price</td>
-                    <td>Actions</td>
-                    <td></td>
-                </tr>
-            </thead>
-
-            <tbody>
-                <tr v-for="product in products">
-                    <td>{{ product.name }}</td>
-                    <td>{{ product.description }}</td>
-                    <td>{{ product.price }}</td>
-                    <td><img :src="product.image" alt="Product Image" width="40px"></td>
-                    <td>
-                        <button id="boton-compra" class="btn btn-primary" @click="comprar(product)">Comprar</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <!-- 3x3 grid -->
+        <div class="container">
+            <div class="row">
+                <div v-for="(product, index) in products" :key="index" class="col-4 mb-3">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <h3>{{ product.name }}</h3>
+                            <p>{{ product.description }}</p>
+                            <p>{{ product.price }} $</p>
+                            <p><img :src="product.image" alt="Product Image" width="40px"></p>
+                            <p>
+                                <button id="boton-compra" class="btn btn-primary" @click="comprar(product)">Comprar</button>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- Agregar modal aquí -->
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">

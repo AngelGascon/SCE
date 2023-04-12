@@ -95,7 +95,7 @@ app.get('/api/searchSuggestion', function (req, res) {
         if (searchData == "")
             res.json(cryptoFile.filter(x => x.name));
         else {
-            res.json(cryptoFile.filter(x => x.name.toLowerCase().startsWith(searchData)).map(x => x.name));
+            res.json(cryptoFile.filter(x => x.name.toLowerCase().startsWith(searchData.toLocaleLowerCase())).map(x => x.name));
         }
     });
 });
