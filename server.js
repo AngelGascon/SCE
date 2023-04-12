@@ -82,7 +82,7 @@ app.get('/api/makePurchase', function (req, res) {
             "description": "Compra en línea"
         }],
         "redirect_urls": {
-            "return_url": "http://localhost:3000/process",
+            "return_url": "http://localhost:3000/purchase",
             "cancel_url": "http://localhost:3000/cancel"
         }
     };
@@ -93,13 +93,43 @@ app.get('/api/makePurchase', function (req, res) {
             res.status(500).send('Error al crear el pagament');
         } else {
             const redirectUrl = payment.links.find((link) => link.rel === 'approval_url').href;
+            console.log(payment);
             res.send({ redirectUrl });
         }
     });
 });
 
-
-
+app.get('/purchase', function (req, res) {
+    const paymentId = req.query.paymentId;
+  
+    paypal.payment.get(paymentId, function (error, payment) {
+      if (error) {
+        console.log(error);
+      } else {
+        // Obtener información adicional del pago
+        const payer = payment.payer.payer_info;
+        const amount = payment.transactions[0].amount;
+  
+        // Crear un objeto con la información del pago
+        const paymentInfo = {
+          email: payer.email,
+          firstName: payer.first_name,
+          lastName: payer.last_name,
+          amount: amount.total,
+          currency: amount.currency
+        };
+  
+        console.log(paymentInfo);
+  
+        res.redirect('http://localhost:8080');
+      }
+    });
+  });
+  
+ //res.redirect(`http://localhost:8080?paymentData=${JSON.stringify(paymentData)}`);
+app.get('/cancel', function (req, res) {
+    res.redirect(`http://localhost:8080`);
+});
 
 
 app.listen(app.get('port'), function() {
