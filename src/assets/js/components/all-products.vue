@@ -48,22 +48,47 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <tr v-for="(cryptocurrency, index) in cryptoCart">
-                            <td>
-                                <img :src="cryptocurrency.image" width='32' height='32'>
-                            </td>
-                            <td>
-                                <p>{{ cryptocurrency.name }}</p>
-                                <p style="font-size: small;">{{ cryptocurrency.description }}</p>
-                            </td>
-                            <td>
-                                <p>€{{ cryptocurrency.price }}</p>
-                            </td>
-                        </tr>
+                        <table class="crypto-table">
+                            <thead>
+                            <tr>
+                                <th>Imagen</th>
+                                <th>Nombre</th>
+                                <th>Precio</th>
+                                <th>Eliminar</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr v-for="(cryptocoin, index) in cryptoCart" :key="cryptocoin.id">
+                                <td>
+                                <img :src="cryptocoin.image" alt="" width="32" height="32">
+                                </td>
+                                <td style="width: 50%;">
+                                    <p>{{ cryptocoin.name }}</p>
+                                    <p style="font-size: small;">{{ cryptocoin.description }}</p>
+                                </td>
+                                <td>
+                                <h4>€{{ cryptocoin.price }}</h4>
+                                </td>
+                                <td>
+                                <button @click="removeCrypto(index)" class="delete-button">
+                                    <img src="img/delete.png" alt="Eliminar" width="20px">
+                                </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="1"></td>
+                                <td class="text-left">
+                                    <h4 class="mb-0">Total: {{ cartPrice }} €</h4>
+                                </td>
+                                <td class="text-right">
+                                    <button type="buttom" @click="makePurchase" class="btn btn-primary">Comprar</button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                        <button type="button" class="btn btn-primary">Realizar compra</button>
                     </div>
                 </div>
             </div>
@@ -89,12 +114,32 @@ import { setMaxIdleHTTPParsers } from 'http';
             }
         },
 
+        computed: {
+            cartPrice() {
+                let total = 0;
+                this.cryptoCart.forEach(x => {
+                    total += x.price;
+                });
+                return total.toFixed(2);
+            },
+        },
+
         created: function()
         {
             this.fetchProductData();
         },
 
         methods: {
+            makePurchase: function () {
+                this.$http.get(`http://localhost:3000/api/makePurchase?price=${this.cartPrice}`)
+                .then((response) => {
+                    window.location.href = response.data.redirectUrl;
+                })
+                .catch(error => {
+                        alert('Error al realizar la compra');
+                });
+            },
+ 
             fetchProductData: function()
             {
                 fetch('http://localhost:3000/api/products')
@@ -122,6 +167,10 @@ import { setMaxIdleHTTPParsers } from 'http';
                         return b.price - a.price;
                     }
                 });
+            },
+
+            removeItem: function (index) {
+                this.cartCryptos.splice(index, 1);
             },
 
             searchProducts: function()
@@ -161,6 +210,9 @@ import { setMaxIdleHTTPParsers } from 'http';
                     alert(`La moneda ${crypto.name} ya ha sido añadida anteriormente`);
                          
                 }
+            },
+            removeCrypto: function(index){
+                this.cryptoCart.splice(index, 1);
             },
             resetSearchProducts: function()
             {
