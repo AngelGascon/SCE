@@ -3,7 +3,7 @@
         
         <h2>All Products</h2>
         <!-- SearchBar input and buttons -->
-        <div class="input-group mb-3" style="width: 100%;">
+        <div class="input-group" style="width: 100%;">
             <input type="text" name="search" v-model="productSearch" placeholder="Search products" class="form-control" @keyup="getSearchSuggestions" @keyup.enter="searchProducts">
             <div class="input-group-append">
                 <button class="btn btn-outline-secondary" type="button" @click="searchProducts">Search</button>
@@ -12,13 +12,13 @@
                 </button>
                 <button class="btn btn-outline-secondary" type="button" @click="resetSearchProducts">Reset</button>
             </div>
+            <!-- Search Suggestions -->
+            <ul class="list-group crypto-search-bar" v-if="showAutocomplete">
+                <li class="list-group-item" v-for="(suggestion, index) in autocompleteSuggestions" :key="index" @click="selectSuggestion(suggestion)">
+                    {{ suggestion }}
+                </li>
+            </ul>
         </div>
-        <!-- Search Suggestions -->
-        <ul class="list-group" style="position: absolute; z-index: 1; width: 50%;" v-if="showAutocomplete">
-            <li class="list-group-item" v-for="(suggestion, index) in autocompleteSuggestions" :key="index" @click="selectSuggestion(suggestion)">
-                {{ suggestion }}
-            </li>
-        </ul>
         <!-- 3x3 grid -->
         <div class="container">
             <div class="row">
