@@ -33,7 +33,7 @@
         },
         mounted(){
                let  client = {
-                      sandbox: 'YOUR CLIENT ID',
+                      sandbox: 'AUcp7NI6Je5_u5RSRMYduQI41v4qyiahyWjSU3y-Eg5vnrlwljiIDHnOFrbT8UEpWE4FS4_E4ktyCOOT',
                }
                let  payment = (data, actions) => {
                     // Make a call to the REST api to create the payment

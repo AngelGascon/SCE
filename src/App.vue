@@ -25,6 +25,7 @@ import PersonalHeader from './assets/js/components/PersonalHeader.vue';
 import Paypal from './assets/js/components/Paypal.vue';
 
     export default {
+    name: 'all-products',
     components: {
         PersonalHeader,
         Paypal
