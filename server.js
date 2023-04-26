@@ -22,7 +22,7 @@ app.use(function(req, res, next) {
 
     // Disable caching so we'll always get the latest comments.
     res.setHeader('Cache-Control', 'no-cache');
-    next();//edwsaf
+    next();
 });
 
 app.get('/api/products', function(req, res) {
@@ -154,4 +154,28 @@ app.get('/cancel', function (req, res) {
 
 app.listen(app.get('port'), function() {
     console.log('Server started: http://localhost:' + app.get('port') + '/');
+
+    //60s interval
+    setInterval(() => {
+        fs.readFile(PRODUCTS_FILE, function (err, data) {
+            if (err) {
+                console.error(err);
+                process.exit(1);
+            }
+            var json = JSON.parse(data);
+            json.forEach(x => {
+                var randomChange = Math.floor(Math.random() * (20 - (-20)) + (-20));
+                x.price = parseFloat((x.price + randomChange).toFixed(2));
+                if (parseFloat(x.price) < 0.0)
+                    x.price = 0.0;
+                x.lastPriceTime = new Date(Date.now()).toUTCString();
+            });
+            fs.writeFile(PRODUCTS_FILE, JSON.stringify(json), function (err) {
+                if (err) {
+                    console.error(err);
+                    process.exit(1);
+                }
+            });
+        });
+    }, 60000);
 });

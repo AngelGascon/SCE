@@ -27,6 +27,7 @@
                         <div class="card-body text-center">
                             <h3>{{ product.name }}</h3>
                             <p>{{ product.description }}</p>
+                            <p>{{ product.lastPriceTime }}</p>
                             <p>{{ product.price }} $</p>
                             <p><img :src="product.image" alt="Product Image" width="40px"></p>
                             <p>
@@ -112,6 +113,12 @@ import { setMaxIdleHTTPParsers } from 'http';
                 autocompleteSuggestions: [],
                 showAutocomplete: false
             }
+        },
+
+        mounted() {
+            setInterval(() => {
+                this.fetchProductData();
+            }, 60001);
         },
 
         computed: {
