@@ -3,6 +3,8 @@ var path = require('path');
 var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
+var cors = require('cors');
+var paypal = require('paypal-rest-sdk');
 
 
 var PRODUCTS_FILE = path.join(__dirname, 'src/assets/js/components/product-data.json');
@@ -11,7 +13,7 @@ app.set('port', (process.env.PORT || 3000));
 app.use('/', express.static(__dirname));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
-
+app.use(cors());
 // Additional middleware which will set headers that we need on each request.
 app.use(function(req, res, next) {
     // Set permissive CORS header - this allows this server to be used only as
@@ -57,7 +59,6 @@ app.get('/api/product/:id', function(req, res) {
     });
 });
 
-const paypal = require('paypal-rest-sdk'); //npm install paypal-rest-sdk
 
 paypal.configure({
     'mode': 'sandbox',
@@ -84,74 +85,43 @@ app.get('/api/searchSuggestion', function (req, res) {
     });
 });
 
-
-app.get('/api/makePurchase', function (req, res) {
-    const price = req.query.price;
-
-    const paymentData = {
-        "intent": "sale",
-        "payer": {
-            "payment_method": "paypal"
-        },
-        "transactions": [{
-            "amount": {
-                "total": price,
-                "currency": "USD"
-            },
-            "description": "Compra en línea"
-        }],
-        "redirect_urls": {
-            "return_url": "http://localhost:3000/purchase",
-            "cancel_url": "http://localhost:3000/cancel"
-        }
+app.post('/checkout' , (req , res) => {
+    console.log(req.body);
+    var execute_payment_json = {
+      "payer_id": req.body.data.payerID,
     };
-    
-    paypal.payment.create(paymentData, (error, payment) => {
-        if (error) {
-            console.error(error);
-            res.status(500).send('Error al crear el pagament');
+    const payment = {};
+    payment.amount = req.body.data.amount;
+    const paymentID = req.body.data.paymentID;
+    paymentPaypal(paymentID, execute_payment_json, payment,(err, result) => {
+        if(err) {
+          res.statuts(400).json(JSON.stringify(err));
         } else {
-            const redirectUrl = payment.links.find((link) => link.rel === 'approval_url').href;
-            console.log(payment);
-            res.send({ redirectUrl });
+          res.status(200).json(payment);
         }
     });
-});
-
-app.get('/purchase', function (req, res) {
-    const paymentId = req.query.paymentId;
-  
-    paypal.payment.get(paymentId, function (error, payment) {
-      if (error) {
-        console.log(error);
-      } else {
-        // Obtener información adicional del pago
-        const payer = payment.payer.payer_info;
-        const amount = payment.transactions[0].amount;
-  
-        // Crear un objeto con la información del pago
-        const paymentInfo = {
-          email: payer.email,
-          firstName: payer.first_name,
-          lastName: payer.last_name,
-          amount: amount.total,
-          currency: amount.currency
-        };
-  
-        console.log(paymentInfo);
-        
-        res.redirect(`http://localhost:8080//payment/1?paymentData=${JSON.stringify(paymentData)}`);
-
-      }
-    });
-  });
-  
- 
-app.get('/cancel', function (req, res) {
-    res.redirect(`http://localhost:8080`);
 });
 
 
 app.listen(app.get('port'), function() {
     console.log('Server started: http://localhost:' + app.get('port') + '/');
 });
+
+var paymentPaypal = (paymentID, execute_payment_json, payment, cb) => {
+    paypal.payment.execute(paymentID, execute_payment_json,(error, paymentLog) => {
+        if (error)
+        {
+            return cb(error);
+        }
+        else
+        {
+            // the server logic after successful payment
+            // here just print out the payment information to the console
+            payment.email = paymentLog.payer.payer_info.email;
+            payment.first_name = paymentLog.payer.payer_info.first_name;
+            payment.last_name = paymentLog.payer.payer_info.last_name;
+            console.log(payment);
+            cb(null, JSON.stringify(payment));
+       }
+    });
+}

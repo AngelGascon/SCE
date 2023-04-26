@@ -22,9 +22,12 @@
 <script>
 import PersonalHeader from './assets/js/components/PersonalHeader.vue';
 
+import Paypal from './assets/js/components/Paypal.vue';
+
     export default {
     components: {
-        PersonalHeader
+        PersonalHeader,
+        Paypal
     },
     data() {
         return {
