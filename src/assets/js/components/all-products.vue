@@ -82,7 +82,7 @@
                                     <h4 class="mb-0">Total: {{ cartPrice }} €</h4>
                                 </td>
                                 <td class="text-right">
-                                    <button type="buttom" @click="makePurchase" class="btn btn-primary">Comprar</button>
+                                    <paypal :amount="amount"></paypal>
                                 </td>
                             </tr>
                             </tbody>
@@ -100,10 +100,14 @@
 
 <script>
 import { setMaxIdleHTTPParsers } from 'http';
+import Paypal from './Paypal.vue';
+
+
 
     export default{
         data(){
             return{
+                amount:10,
                 products: [],
                 originalProducts: [],
                 cryptoCart: [],
@@ -113,6 +117,9 @@ import { setMaxIdleHTTPParsers } from 'http';
                 autocompleteSuggestions: [],
                 showAutocomplete: false
             }
+        },
+        components: {
+            'paypal': Paypal
         },
 
         mounted() {
@@ -137,15 +144,7 @@ import { setMaxIdleHTTPParsers } from 'http';
         },
 
         methods: {
-            makePurchase: function () {
-                this.$http.get(`http://localhost:3000/api/makePurchase?price=${this.cartPrice}`)
-                .then((response) => {
-                    window.location.href = response.data.redirectUrl;
-                })
-                .catch(error => {
-                        alert('Error al realizar la compra');
-                });
-            },
+            
  
             fetchProductData: function()
             {
