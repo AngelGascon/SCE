@@ -55,8 +55,14 @@
                     };
                     this.sendDataPaypal({data:data}).then(() => {
                         this.success=true
+                        setTimeout(() => {
+                            this.success = false;
+                        }, 3000); // Ocultar el mensaje después de 3 segundos (3000 milisegundos)
                     }).catch(err=>{
                         this.error=true
+                        setTimeout(() => {
+                            this.error = false;
+                        }, 3000); // Ocultar el mensaje después de 3 segundos (3000 milisegundos)
                     });
                 }
                 paypal.Button.render({

@@ -82,7 +82,7 @@
                                     <h4 class="mb-0">Total: {{ cartPrice }} €</h4>
                                 </td>
                                 <td class="text-right">
-                                    <paypal :amount="amount"></paypal>
+                                    <paypal :amount=cartPrice></paypal>
                                 </td>
                             </tr>
                             </tbody>
@@ -107,7 +107,7 @@ import Paypal from './Paypal.vue';
     export default{
         data(){
             return{
-                amount:10,
+                amount:0,
                 products: [],
                 originalProducts: [],
                 cryptoCart: [],
