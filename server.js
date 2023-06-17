@@ -61,9 +61,7 @@ app.get('/api/product/:id', function(req, res) {
 
 
 paypal.configure({
-    'mode': 'sandbox',
-    'client_id': 'AUcp7NI6Je5_u5RSRMYduQI41v4qyiahyWjSU3y-Eg5vnrlwljiIDHnOFrbT8UEpWE4FS4_E4ktyCOOT',
-    'client_secret': 'EMvMotybEmL7NmnnHbHoPVZ_sfxw8xny-ldAcU1KMq-cVnbWo_IBNodRZYc3NzmCpSvMGpDHGlUmJt9R'
+        //add id and secret
 });
 
 //SearchSuggestion
